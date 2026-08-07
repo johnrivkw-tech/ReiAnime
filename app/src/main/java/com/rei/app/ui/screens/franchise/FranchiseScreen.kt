@@ -112,7 +112,7 @@ private fun FranchiseNodeCard(node: FranchiseNode, onClick: () -> Unit) {
         else -> MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f)
     }
 
-    val indent = node.depth * 24.dp
+    val indent = 24.dp * node.depth
 
     Row(
         modifier = Modifier.fillMaxWidth().padding(start = indent),
