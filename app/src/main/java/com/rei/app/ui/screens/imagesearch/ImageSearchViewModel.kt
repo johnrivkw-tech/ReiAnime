@@ -29,7 +29,7 @@ class ImageSearchViewModel @Inject constructor(
         _state.value = ImageSearchState(loading = true)
         try {
             val result = repo.searchByImageUrl(url)
-            _state.value = ImageSearchState(results = result.result?.sortedByDescending { it.similarity } ?: emptyList())
+            _state.value = ImageSearchState(results = result.matches.sortedByDescending { it.similarity })
         } catch (e: Exception) {
             _state.value = ImageSearchState(error = e.message ?: "Search failed")
         }
@@ -43,7 +43,7 @@ class ImageSearchViewModel @Inject constructor(
                 ?: throw IllegalArgumentException("Could not read image")
             val filename = uri.lastPathSegment ?: "image.jpg"
             val result = repo.searchByImageBytes(bytes, filename)
-            _state.value = ImageSearchState(results = result.result?.sortedByDescending { it.similarity } ?: emptyList())
+            _state.value = ImageSearchState(results = result.matches.sortedByDescending { it.similarity })
         } catch (e: Exception) {
             _state.value = ImageSearchState(error = e.message ?: "Search failed")
         }
