@@ -2,11 +2,13 @@ package com.rei.app.ui.screens.home
 
 import androidx.compose.animation.*
 import androidx.compose.foundation.background
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -126,7 +128,7 @@ fun HomeScreen(onAnimeClick: (Int) -> Unit, nav: NavHostController? = null, vm: 
                         item {
                             SectionHeader("\u2605 MAL Top Rated")
                             LazyRow(horizontalArrangement = Arrangement.spacedBy(10.dp), contentPadding = PaddingValues(horizontal = 20.dp)) {
-                                items(d.allTime.take(10).withIndex()) { (index, anime) ->
+                                itemsIndexed(d.allTime.take(10)) { index, anime ->
                                     Box {
                                         AnimeCard(anime, { onAnimeClick(anime.id) }, Modifier.width(140.dp))
                                         if (config.showRankBadges) { RankBadge(index + 1, Modifier.padding(4.dp).align(Alignment.TopStart)) }
