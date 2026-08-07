@@ -29,6 +29,7 @@ import coil.request.ImageRequest
 import com.rei.app.domain.model.Anime
 import com.rei.app.domain.model.MediaListStatus
 import com.rei.app.ui.components.PremiumEmptyState
+import com.rei.app.ui.components.TrackingEmptyState
 import com.rei.app.ui.components.PremiumProgressIndicator
 import com.rei.app.ui.components.PremiumShimmer
 import com.rei.app.ui.theme.LocalReiConfig
@@ -185,7 +186,7 @@ private fun PremiumTrackingItem(
                     onClick = onIncrement,
                     modifier = Modifier.size(36.dp),
                     shape = RoundedCornerShape(10.dp),
-                    colors = FilledIconButtonDefaults.filledIconButtonColors(containerColor = MaterialTheme.colorScheme.primaryContainer, contentColor = MaterialTheme.colorScheme.onPrimaryContainer)
+                    colors = IconButtonDefaults.filledIconButtonColors(containerColor = MaterialTheme.colorScheme.primaryContainer, contentColor = MaterialTheme.colorScheme.onPrimaryContainer)
                 ) { Icon(Icons.Filled.Add, null, modifier = Modifier.size(16.dp)) }
             }
         }
