@@ -1,6 +1,8 @@
 package com.rei.app.ui.screens.random
 
 import androidx.compose.animation.*
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -85,7 +87,7 @@ private fun RandomAnimeCard(anime: Anime, onClick: (Int) -> Unit, m: Modifier = 
     Surface(m.fillMaxWidth().clickable { onClick(anime.id) }, shape = RoundedCornerShape(20.dp), color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f), tonalElevation = 4.dp) {
         Box {
             anime.bannerImage?.let { AsyncImage(model = ImageRequest.Builder(LocalContext.current).data(it).crossfade(true).build(), null, modifier = Modifier.fillMaxWidth().height(320.dp).clip(RoundedCornerShape(20.dp)), contentScale = ContentScale.Crop, alpha = 0.25f) }
-            Box(Modifier.matchParentSize().background(Brush.verticalGradient(listOf(Color.Transparent, MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.6f)), MaterialTheme.colorScheme.surfaceVariant)))
+            Box(Modifier.matchParentSize().background(Brush.verticalGradient(listOf(Color.Transparent, MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.6f), MaterialTheme.colorScheme.surfaceVariant))))
             Column(Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
                 Row(horizontalArrangement = Arrangement.spacedBy(14.dp)) {
                     Card(shape = RoundedCornerShape(14.dp), elevation = CardDefaults.cardElevation(defaultElevation = 4.dp), modifier = Modifier.width(100.dp).height(140.dp)) {
