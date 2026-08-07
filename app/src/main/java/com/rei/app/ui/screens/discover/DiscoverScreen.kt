@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.sp
 import com.rei.app.ui.components.genreColor
 import com.rei.app.ui.theme.LocalReiConfig
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 fun DiscoverScreen(onAnimeClick: (Int) -> Unit, onGenreClick: (String) -> Unit = {}) {
     val config = LocalReiConfig.current
