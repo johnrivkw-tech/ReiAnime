@@ -51,7 +51,12 @@ fun ImageSearchScreen(onAnimeClick: (Int) -> Unit, vm: ImageSearchViewModel = hi
         uri?.let { vm.searchByUri(context, it) }
     }
 
-    Scaffold(topBar = { TopAppBar(title = { Text("Scene Search", fontWeight = FontWeight.Bold) }, subtitle = { Text("Powered by trace.moe") }) }) { pv ->
+    Scaffold(topBar = { TopAppBar(title = {
+        Column {
+            Text("Scene Search", fontWeight = FontWeight.Bold)
+            Text("Powered by trace.moe", style = MaterialTheme.typography.labelSmall)
+        }
+    }) }) { pv ->
         LazyColumn(Modifier.fillMaxSize().padding(pv), contentPadding = PaddingValues(16.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
 
             // Upload Area
@@ -157,22 +162,22 @@ fun ImageSearchScreen(onAnimeClick: (Int) -> Unit, vm: ImageSearchViewModel = hi
 
 @Composable
 private fun TraceMatchCard(match: TraceMatch, onAnimeClick: (Int) -> Unit) {
-    val simPercent = match.similarityPercent
+    val simValue = match.similarity * 100
     val simColor = when {
-        simPercent >= 90 -> Color(0xFF4CAF50)
-        simPercent >= 70 -> Color(0xFFFFC107)
-        simPercent >= 50 -> Color(0xFFFF9800)
+        simValue >= 90 -> Color(0xFF4CAF50)
+        simValue >= 70 -> Color(0xFFFFC107)
+        simValue >= 50 -> Color(0xFFFF9800)
         else -> Color(0xFFFF5722)
     }
 
     Surface(
-        onClick = { match.anilistId?.let { onAnimeClick(it) } },
+        onClick = { onAnimeClick(match.anilistId) },
         shape = RoundedCornerShape(16.dp),
         color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f)
     ) {
         Row(Modifier.padding(12.dp), horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {
             // Thumbnail
-            match.filename?.let { url ->
+            match.imagePreview?.let { url ->
                 AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current).data(url).crossfade(true).build(),
                     contentDescription = null,
@@ -182,12 +187,12 @@ private fun TraceMatchCard(match: TraceMatch, onAnimeClick: (Int) -> Unit) {
             }
 
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                Text(match.title?.romaji ?: match.title?.native ?: "Unknown", style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.SemiBold, maxLines = 1)
+                Text(match.title.romaji ?: match.title.native ?: "Unknown", style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.SemiBold, maxLines = 1)
 
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
                     // Similarity badge
                     Surface(color = simColor.copy(alpha = 0.15f), shape = RoundedCornerShape(6.dp)) {
-                        Text("${simPercent}%", style = MaterialTheme.typography.labelSmall, color = simColor, fontWeight = FontWeight.Bold, modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp))
+                        Text(match.similarityPercent, style = MaterialTheme.typography.labelSmall, color = simColor, fontWeight = FontWeight.Bold, modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp))
                     }
 
                     // Episode badge
@@ -198,16 +203,12 @@ private fun TraceMatchCard(match: TraceMatch, onAnimeClick: (Int) -> Unit) {
                     }
 
                     // Timestamp
-                    match.timestamp?.let { ts ->
-                        val min = (ts / 60).toInt()
-                        val sec = (ts % 60).toInt()
-                        Text(String.format("%d:%02d", min, sec), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                    }
+                    Text(match.timestamp, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             }
 
             // Video preview button
-            match.video?.let { url ->
+            match.videoPreview?.let { url ->
                 IconButton(onClick = { /* Open video preview */ }) {
                     Icon(Icons.Filled.PlayCircleFilled, null, tint = MaterialTheme.colorScheme.primary)
                 }
