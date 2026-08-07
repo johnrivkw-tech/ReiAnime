@@ -650,7 +650,7 @@ private fun DetailBottomBar(anime: Anime, onTrack: () -> Unit, onFavorite: () ->
             onTrack,
             Modifier.weight(1f).height(48.dp),
             shape = RoundedCornerShape(14.dp),
-            colors = FilledIconButtonDefaults.filledIconButtonColors(containerColor = MaterialTheme.colorScheme.primary)
+            colors = IconButtonDefaults.filledIconButtonColors(containerColor = MaterialTheme.colorScheme.primary)
         ) {
             Icon(Icons.Filled.Add, null)
             Spacer(Modifier.width(4.dp))
