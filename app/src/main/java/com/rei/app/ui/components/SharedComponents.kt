@@ -77,7 +77,7 @@ fun HeroCarousel(anime: List<Anime>, onAnimeClick: (Int) -> Unit, modifier: Modi
     val config = LocalReiConfig.current
     LaunchedEffect(pagerState) { while (true) { delay(config.carouselAutoScrollMs.toLong()); pagerState.animateScrollToPage((pagerState.currentPage + 1) % pagerState.pageCount) } }
     Box(modifier = modifier.height(bannerH.dp)) {
-        HorizontalPager(state = pagerState, modifier = Modifier.fillMaxSize(), beyondBoundsPageCount = 1) { page ->
+        HorizontalPager(state = pagerState, modifier = Modifier.fillMaxSize(), beyondViewportPageCount = 1) { page ->
             val item = anime[page]
             Box(modifier = Modifier.fillMaxSize().clickable { onAnimeClick(item.id) }) {
                 AsyncImage(model = ImageRequest.Builder(LocalContext.current).data(item.bannerImage ?: item.coverImage.best).crossfade(true).build(), contentDescription = item.title.primary, modifier = Modifier.fillMaxSize().graphicsLayer {
