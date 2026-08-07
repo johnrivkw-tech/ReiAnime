@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Outer glow ring -->
+    <path
+        android:name="outerGlow"
+        android:fillColor="#1A3DB4F2"
+        android:pathData="M54,10 A44,44 0 1,1 53.99,10 Z" />
+    <!-- Inner diamond shape -->
+    <path
+        android:name="innerShape"
+        android:fillColor="#E03DB4F2"
+        android:pathData="M54,28 L76,54 L54,80 L32,54 Z" />
+    <!-- Core dot -->
+    <path
+        android:name="coreDot"
+        android:fillColor="#FFFF4081"
+        android:pathData="M54,46 A8,8 0 1,1 53.99,46 Z" />
+    <!-- Rei text mark -->
+    <path
+        android:fillColor="#CCFFFFFF"
+        android:pathData="M40,50 L44,50 L44,58 L48,50 L52,50 L48,57 L52,64 L48,64 L44,58 L44,64 L40,64 Z
+                          M55,50 L59,50 L59,64 L55,64 Z
+                          M62,50 L66,50 L70,58 L70,50 L74,50 L74,64 L70,64 L66,56 L66,64 L62,64 Z" />
+</vector>

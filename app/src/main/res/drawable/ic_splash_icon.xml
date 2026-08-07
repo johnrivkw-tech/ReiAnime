@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/splash_vector">
+    <target
+        android:name="outerGlow"
+        android:animation="@animator/splash_grow" />
+    <target
+        android:name="innerShape"
+        android:animation="@animator/splash_rotate" />
+    <target
+        android:name="coreDot"
+        android:animation="@animator/splash_pulse" />
+</animated-vector>
