@@ -37,8 +37,12 @@ fun RecommendationScreen(onAnimeClick: (Int) -> Unit, onBack: () -> Unit, vm: Re
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("For You", fontWeight = FontWeight.Bold) },
-                subtitle = { Text("AI Recommendations", style = MaterialTheme.typography.labelSmall) },
+                title = {
+                    Column {
+                        Text("For You", fontWeight = FontWeight.Bold)
+                        Text("AI Recommendations", style = MaterialTheme.typography.labelSmall)
+                    }
+                },
                 navigationIcon = { IconButton(onBack) { Icon(Icons.Filled.ArrowBack, "Back") } },
                 actions = {
                     if (state.isLoading) {
