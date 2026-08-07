@@ -79,25 +79,25 @@ fun ReiNavHost(nav: NavHostController = rememberNavController(), m: Modifier = M
         popExitTransition = { fadeOut(tween(200)) + slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.End, spring(stiffness = Spring.StiffnessMedium)) }
     ) {
         composable(Route.Home.route) { HomeScreen({ nav.navigate(Route.AnimeDetail.create(it)) }, nav) }
-        composable(Route.Search.route) { SearchScreen { nav.navigate(Route.AnimeDetail.create(it)) } }
+        composable(Route.Search.route) { SearchScreen(onAnimeClick = { nav.navigate(Route.AnimeDetail.create(it)) }) }
         composable(Route.SearchGenre.route, arguments = listOf(navArgument("genre") { type = NavType.StringType })) {
             val genre = it.arguments?.getString("genre") ?: ""
             SearchScreen(initialGenre = genre, onAnimeClick = { nav.navigate(Route.AnimeDetail.create(it)) })
         }
-        composable(Route.Seasonal.route) { SeasonalScreen { nav.navigate(Route.AnimeDetail.create(it)) } }
-        composable(Route.Tracking.route) { TrackingScreen { nav.navigate(Route.AnimeDetail.create(it)) } }
+        composable(Route.Seasonal.route) { SeasonalScreen(onAnimeClick = { nav.navigate(Route.AnimeDetail.create(it)) }) }
+        composable(Route.Tracking.route) { TrackingScreen(onAnimeClick = { nav.navigate(Route.AnimeDetail.create(it)) }) }
         composable(Route.Profile.route) { ProfileScreen({ nav.navigate(Route.Settings.route) }, { nav.navigate(Route.AnimeDetail.create(it)) }, { nav.navigate(Route.Economy.route) }, { nav.navigate(Route.Collections.route) }, { nav.navigate(Route.Compare.create("user")) }) }
-        composable(Route.Settings.route) { SettingsScreen { nav.popBackStack() } }
-        composable(Route.Calendar.route) { CalendarScreen { nav.navigate(Route.AnimeDetail.create(it)) } }
+        composable(Route.Settings.route) { SettingsScreen(onBack = { nav.popBackStack() }) }
+        composable(Route.Calendar.route) { CalendarScreen(onAnimeClick = { nav.navigate(Route.AnimeDetail.create(it)) }) }
         composable(Route.Stats.route) { StatsScreen() }
-        composable(Route.Random.route) { RandomAnimeScreen { nav.navigate(Route.AnimeDetail.create(it)) } }
+        composable(Route.Random.route) { RandomAnimeScreen(onAnimeClick = { nav.navigate(Route.AnimeDetail.create(it)) }) }
         composable(Route.Discover.route) { DiscoverScreen({ nav.navigate(Route.AnimeDetail.create(it)) }, { genre -> nav.navigate(Route.SearchGenre.create(genre)) }) }
         composable(Route.Onboarding.route) { OnboardingScreen { nav.popBackStack() } }
-        composable(Route.ImageSearch.route) { ImageSearchScreen { nav.navigate(Route.AnimeDetail.create(it)) } }
-        composable(Route.Streaming.route) { StreamingScreen { nav.navigate(Route.AnimeDetail.create(it)) } }
+        composable(Route.ImageSearch.route) { ImageSearchScreen(onAnimeClick = { nav.navigate(Route.AnimeDetail.create(it)) }) }
+        composable(Route.Streaming.route) { StreamingScreen(onAnimeClick = { nav.navigate(Route.AnimeDetail.create(it)) }) }
         composable(Route.Economy.route) { EconomyScreen() }
-        composable(Route.WaifuGallery.route) { WaifuGalleryScreen { nav.popBackStack() } }
-        composable(Route.News.route) { NewsScreen { nav.navigate(Route.AnimeDetail.create(it)) } }
+        composable(Route.WaifuGallery.route) { WaifuGalleryScreen(onBack = { nav.popBackStack() }) }
+        composable(Route.News.route) { NewsScreen(onAnimeClick = { nav.navigate(Route.AnimeDetail.create(it)) }) }
         composable(Route.Quiz.route) { QuizScreen() }
         composable(Route.Collections.route) { CollectionsScreen(emptyList(), onBack = { nav.popBackStack() }) }
         composable(Route.Compare.route, arguments = listOf(navArgument("username") { type = NavType.StringType })) {
@@ -114,7 +114,7 @@ fun ReiNavHost(nav: NavHostController = rememberNavController(), m: Modifier = M
         )) {
             val id = it.arguments?.getInt("id") ?: return@composable
             val title = it.arguments?.getString("title") ?: ""
-            ReviewsScreen(id, title) { nav.popBackStack() }
+            ReviewsScreen(id, title, onBack = { nav.popBackStack() })
         }
 
         // Anime Detail — pass functions for episode grid + franchise
@@ -137,7 +137,7 @@ fun ReiNavHost(nav: NavHostController = rememberNavController(), m: Modifier = M
             val id = it.arguments?.getInt("id") ?: return@composable
             val title = it.arguments?.getString("title") ?: ""
             val total = it.arguments?.getInt("total") ?: 12
-            EpisodeGridScreen(id, title, total) { nav.popBackStack() }
+            EpisodeGridScreen(id, title, total, onBack = { nav.popBackStack() })
         }
 
         // Franchise / Watch Order
@@ -147,7 +147,7 @@ fun ReiNavHost(nav: NavHostController = rememberNavController(), m: Modifier = M
         )) {
             val id = it.arguments?.getInt("id") ?: return@composable
             val title = it.arguments?.getString("title") ?: ""
-            FranchiseScreen(id, title, { nav.popBackStack() }) { nav.navigate(Route.AnimeDetail.create(it)) }
+            FranchiseScreen(id, title, onBack = { nav.popBackStack() }, onAnimeClick = { nav.navigate(Route.AnimeDetail.create(it)) })
         }
     }
 }
