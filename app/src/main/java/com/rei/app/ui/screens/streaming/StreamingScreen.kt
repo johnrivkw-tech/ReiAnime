@@ -38,8 +38,12 @@ fun StreamingScreen(onAnimeClick: (Int) -> Unit, vm: StreamingViewModel = hiltVi
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Where to Watch", fontWeight = FontWeight.Bold) },
-                subtitle = { Text("Powered by LiveChart.me", style = MaterialTheme.typography.labelSmall) }
+                title = {
+                    Column {
+                        Text("Where to Watch", fontWeight = FontWeight.Bold)
+                        Text("Powered by LiveChart.me", style = MaterialTheme.typography.labelSmall)
+                    }
+                }
             )
         }
     ) { pv ->
