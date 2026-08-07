@@ -21,10 +21,16 @@ import javax.inject.Inject
  * Shows up to 3 items with: title, episode count, and time until airing.
  */
 class AiringTodayWidget : GlanceAppWidget() {
-    @Composable
-    override fun Content() {
+    override suspend fun provideGlance(context: Context, id: GlanceId) {
         // In a real app, we'd use a StateFlow from WorkManager/Room
         // For now, show a styled placeholder that demonstrates the widget structure
+        provideContent {
+            WidgetContent()
+        }
+    }
+
+    @Composable
+    private fun WidgetContent() {
         GlanceTheme {
             Column(
                 modifier = GlanceModifier
