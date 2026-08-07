@@ -43,13 +43,13 @@ class NewsViewModel @Inject constructor(private val jikan: JikanApi) : ViewModel
         try {
             val more = jikan.getTopAnime(currentPage)
             val mapped = more.map { AnimeNews(
-                malId = it.malId,
-                title = it.title,
-                imageUrl = it.images?.get("jpg")?.imageUrl ?: "",
-                score = it.score ?: 0.0,
-                synopsis = it.synopsis ?: "",
-                genres = it.genres?.map { g -> g.name } ?: emptyList(),
-                status = it.status ?: "",
+                malId = it.idMal ?: it.id,
+                title = it.title.primary,
+                imageUrl = it.coverImage.best ?: "",
+                score = it.averageScore?.toFloat() ?: 0f,
+                synopsis = it.description ?: "",
+                genres = it.genres,
+                status = it.status?.name ?: "",
                 episodes = it.episodes
             ) }
             if (mapped.isEmpty()) _hasMore.value = false
