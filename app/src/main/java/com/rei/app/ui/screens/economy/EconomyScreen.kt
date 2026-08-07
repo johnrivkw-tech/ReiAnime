@@ -62,7 +62,7 @@ fun EconomyScreen(vm: EconomyViewModel = hiltViewModel()) {
                         Text("Rei Coins", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                         if (streak > 0) {
                             Surface(shape = RoundedCornerShape(12.dp), color = Color(0xFFFF6D00).copy(alpha = 0.12f)) {
-                                Row(Modifier.padding(horizontal = 12.dp, vertical = 6.dp), verticalArrangement = Arrangement.spacedBy(4.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+                                Row(Modifier.padding(horizontal = 12.dp, vertical = 6.dp), horizontalArrangement = Arrangement.spacedBy(4.dp), verticalAlignment = Alignment.CenterVertically) {
                                     Text("▲", fontSize = 14.sp)
                                     Text("${streak} day streak", style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.Bold, color = Color(0xFFFF6D00))
                                 }
@@ -157,14 +157,14 @@ fun EconomyScreen(vm: EconomyViewModel = hiltViewModel()) {
                         // Price / Status
                         if (unlocked) {
                             Surface(shape = RoundedCornerShape(8.dp), color = Color(0xFF4CAF50).copy(alpha = 0.15f)) {
-                                Row(Modifier.padding(horizontal = 10.dp, vertical = 4.dp), verticalArrangement = Arrangement.spacedBy(4.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+                                Row(Modifier.padding(horizontal = 10.dp, vertical = 4.dp), horizontalArrangement = Arrangement.spacedBy(4.dp), verticalAlignment = Alignment.CenterVertically) {
                                     Icon(Icons.Filled.CheckCircle, null, Modifier.size(14.dp), Color(0xFF4CAF50))
                                     Text("Owned", style = MaterialTheme.typography.labelSmall, fontWeight = FontWeight.Bold, color = Color(0xFF4CAF50))
                                 }
                             }
                         } else {
                             Surface(shape = RoundedCornerShape(8.dp), color = if (isMythic) Color(0xFFFF1744).copy(alpha = 0.2f) else if (canAfford) Color(0xFF7C4DFF).copy(alpha = 0.15f) else MaterialTheme.colorScheme.surfaceVariant) {
-                                Row(Modifier.padding(horizontal = 10.dp, vertical = 4.dp), verticalArrangement = Arrangement.spacedBy(4.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+                                Row(Modifier.padding(horizontal = 10.dp, vertical = 4.dp), horizontalArrangement = Arrangement.spacedBy(4.dp), verticalAlignment = Alignment.CenterVertically) {
                                     Text(if (isMythic) "\u2742" else "\u25C8", fontSize = 12.sp, color = if (isMythic) Color(0xFFFF1744) else Color.Unspecified)
                                     Text("${item.cost}", style = MaterialTheme.typography.labelSmall, fontWeight = FontWeight.Bold, color = if (isMythic) Color(0xFFFF1744) else if (canAfford) Color(0xFF7C4DFF) else MaterialTheme.colorScheme.onSurfaceVariant)
                                 }
