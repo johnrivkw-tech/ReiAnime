@@ -59,7 +59,7 @@ fun DiscoverScreen(onAnimeClick: (Int) -> Unit, onGenreClick: (String) -> Unit =
                 ) {
                     Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(8.dp)) {
                         Text("\u2726", fontSize = 32.sp, color = Color(0xFF3DB4F2))
-                        Text("Discover Your Next Favorite", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Black, color = Color.White, shadow = Shadow(Color.Black.copy(alpha = 0.5f), androidx.compose.ui.geometry.Offset(0f, 2f), 4f))
+                        Text("Discover Your Next Favorite", style = MaterialTheme.typography.titleLarge.copy(shadow = Shadow(Color.Black.copy(alpha = 0.5f), androidx.compose.ui.geometry.Offset(0f, 2f), 4f)), fontWeight = FontWeight.Black, color = Color.White)
                         Text("Explore genres, trending, and hidden gems", style = MaterialTheme.typography.bodyMedium, color = Color.White.copy(alpha = 0.7f))
                     }
                 }
@@ -106,7 +106,7 @@ fun DiscoverScreen(onAnimeClick: (Int) -> Unit, onGenreClick: (String) -> Unit =
                             contentAlignment = Alignment.BottomStart
                         ) {
                             Column(Modifier.padding(14.dp), verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                                Text("$symbol $name", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold, color = Color.White, maxLines = 1, overflow = TextOverflow.Ellipsis, shadow = Shadow(Color.Black.copy(alpha = 0.4f), androidx.compose.ui.geometry.Offset(0f, 1f), 2f))
+                                Text("$symbol $name", style = MaterialTheme.typography.titleSmall.copy(shadow = Shadow(Color.Black.copy(alpha = 0.4f), androidx.compose.ui.geometry.Offset(0f, 1f), 2f)), fontWeight = FontWeight.Bold, color = Color.White, maxLines = 1, overflow = TextOverflow.Ellipsis)
                                 Text(desc, style = MaterialTheme.typography.labelSmall, color = Color.White.copy(alpha = 0.75f), maxLines = 1, overflow = TextOverflow.Ellipsis)
                             }
                         }
@@ -203,7 +203,8 @@ fun DiscoverScreen(onAnimeClick: (Int) -> Unit, onGenreClick: (String) -> Unit =
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun FlowRow(horizontalArrangement: Arrangement.Horizontal, verticalArrangement: Arrangement.Vertical, content: @Composable () -> Unit) {
+private fun FlowRow(horizontalArrangement: Arrangement.Horizontal, verticalArrangement: Arrangement.Vertical, content: @Composable FlowRowScope.() -> Unit) {
     androidx.compose.foundation.layout.FlowRow(horizontalArrangement = horizontalArrangement, verticalArrangement = verticalArrangement, content = content)
 }
