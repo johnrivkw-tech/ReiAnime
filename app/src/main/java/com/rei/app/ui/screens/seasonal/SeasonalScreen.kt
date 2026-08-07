@@ -12,9 +12,11 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.rei.app.domain.model.Anime
 import com.rei.app.domain.model.MediaSort
@@ -34,8 +36,12 @@ fun SeasonalScreen(onAnimeClick: (Int) -> Unit, vm: SeasonalViewModel = hiltView
         modifier = Modifier.nestedScroll(scroll.nestedScrollConnection),
         topBar = {
             TopAppBar(
-                title = { Text("Seasonal", fontWeight = FontWeight.Bold) },
-                subtitle = { Text("${state.season.name.lowercase().replaceFirstChar { it.uppercase() }} $currentYear", style = MaterialTheme.typography.labelSmall) },
+                title = {
+                    Column {
+                        Text("Seasonal", fontWeight = FontWeight.Bold)
+                        Text("${state.season.name.lowercase().replaceFirstChar { it.uppercase() }} $currentYear", style = MaterialTheme.typography.labelSmall)
+                    }
+                },
                 actions = {
                     IconButton({ }) { Icon(Icons.Outlined.FilterList, "Filter", tint = MaterialTheme.colorScheme.onSurfaceVariant) }
                 },
