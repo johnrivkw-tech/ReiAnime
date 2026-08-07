@@ -116,16 +116,16 @@ fun SearchScreen(onAnimeClick: (Int) -> Unit, initialGenre: String = "", vm: Sea
                     Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
                         Text("Genre", style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
                         LazyRow(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                            item { GenreChip("All", genre == null) { genre = null } }
+                            item { GenreChip("All", genre == null, { genre = null }) }
                             items(listOf("Action", "Romance", "Comedy", "Fantasy", "Sci-Fi", "Horror", "Slice of Life", "Drama", "Adventure", "Mecha", "Isekai", "Mystery")) {
-                                GenreChip(it, genre == it) { genre = it; if (query.length >= 2) vm.search(query, genre, year, format) }
+                                GenreChip(it, genre == it, { genre = it; if (query.length >= 2) vm.search(query, genre, year, format) })
                             }
                         }
                         Text("Format", style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
                         LazyRow(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                            item { GenreChip("All", format == null) { format = null } }
+                            item { GenreChip("All", format == null, { format = null }) }
                             items(MediaFormat.entries.filter { it.name != "MUSIC" }) {
-                                GenreChip(it.name.replace("_", " "), format == it) { format = it; if (query.length >= 2) vm.search(query, genre, year, format) }
+                                GenreChip(it.name.replace("_", " "), format == it, { format = it; if (query.length >= 2) vm.search(query, genre, year, format) })
                             }
                         }
                     }
