@@ -37,8 +37,9 @@ import com.rei.app.ui.components.ScoreRing
 import com.rei.app.ui.components.ShimmerBox
 import com.rei.app.ui.components.genreColor
 import com.rei.app.ui.theme.LocalReiConfig
+import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun AnimeDetailScreen(
     animeId: Int,
@@ -51,12 +52,13 @@ fun AnimeDetailScreen(
     var showTrack by remember { mutableStateOf(false) }
     var synopsisExpanded by remember { mutableStateOf(false) }
     val config = LocalReiConfig.current
+    val context = LocalContext.current
     LaunchedEffect(animeId) { vm.load(animeId) }
 
     Scaffold(
         bottomBar = {
             (state as? DetailState.Success)?.anime?.let { anime ->
-                DetailBottomBar(anime, onTrack = { showTrack = true }, onFavorite = { vm.toggleFavorite() }, onShare = { vm.shareAnime(LocalContext.current) })
+                DetailBottomBar(anime, onTrack = { showTrack = true }, onFavorite = { vm.toggleFavorite() }, onShare = { vm.shareAnime(context) })
             }
         }
     ) { pv ->
@@ -106,7 +108,7 @@ fun AnimeDetailScreen(
                                     Modifier.background(Color.Black.copy(alpha = 0.3f), CircleShape)
                                 ) { Icon(if (isFav) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder, null, tint = if (isFav) Color(0xFFFF4081) else Color.White) }
                                 IconButton(
-                                    { vm.shareAnime(LocalContext.current) },
+                                    { vm.shareAnime(context) },
                                     Modifier.background(Color.Black.copy(alpha = 0.3f), CircleShape)
                                 ) { Icon(Icons.Filled.Share, null, tint = Color.White) }
                             }
@@ -275,7 +277,7 @@ fun AnimeDetailScreen(
                                             style = MaterialTheme.typography.labelLarge,
                                             fontWeight = if (selected) FontWeight.Bold else FontWeight.Medium,
                                             color = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
-                                            modifier = Modifier.padding(vertical = 10.dp).align(Alignment.CenterHorizontally),
+                                            modifier = Modifier.fillMaxWidth().padding(vertical = 10.dp),
                                             textAlign = TextAlign.Center
                                         )
                                     }
@@ -516,7 +518,7 @@ private fun RelatedTab(
         // Recommendations
         if (config.showRecommendations && anime.recommendations.isNotEmpty()) {
             item {
-                Row(Modifier.padding(horizontal = 24.dp, vertical = 8.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
+                Row(Modifier.padding(horizontal = 24.dp, vertical = 8.dp).fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
                     Text("Recommendations", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
                     TextButton({}) { Text("See All", style = MaterialTheme.typography.labelLarge) }
                 }
