@@ -18,7 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
-    private val tvm: ThemeViewModel,
+    private val tvm: ThemeRepository,
     private val repo: AnimeRepository,
     private val backupUtil: BackupUtil,
     private val anilistAuth: AniListAuth,
