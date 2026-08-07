@@ -44,8 +44,12 @@ fun CompareScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Compare Lists", fontWeight = FontWeight.Bold) },
-                subtitle = { Text("vs $username", style = MaterialTheme.typography.labelSmall) },
+                title = {
+                    Column {
+                        Text("Compare Lists", fontWeight = FontWeight.Bold)
+                        Text("vs $username", style = MaterialTheme.typography.labelSmall)
+                    }
+                },
                 navigationIcon = { IconButton(onBack) { Icon(Icons.Filled.ArrowBack, "Back") } }
             )
         }
