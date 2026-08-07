@@ -37,8 +37,12 @@ fun MangaScreen(onBack: () -> Unit, vm: MangaViewModel = hiltViewModel()) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Manga", fontWeight = FontWeight.Bold) },
-                subtitle = { Text("via MangaDex", style = MaterialTheme.typography.labelSmall) },
+                title = {
+                    Column {
+                        Text("Manga", fontWeight = FontWeight.Bold)
+                        Text("via MangaDex", style = MaterialTheme.typography.labelSmall)
+                    }
+                },
                 navigationIcon = { IconButton(onBack) { Icon(Icons.Filled.ArrowBack, "Back") } },
                 actions = {
                     if (isLoading) CircularProgressIndicator(modifier = Modifier.size(20.dp).padding(end = 12.dp), strokeWidth = 2.dp)
