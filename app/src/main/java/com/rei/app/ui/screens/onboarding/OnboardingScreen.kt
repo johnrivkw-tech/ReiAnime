@@ -34,6 +34,7 @@ data class OnboardPage(
     val features: List<String>
 )
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun OnboardingScreen(onFinish: () -> Unit) {
     val pages = listOf(
