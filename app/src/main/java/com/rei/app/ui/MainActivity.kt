@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.compose.animation.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -33,11 +34,10 @@ import com.rei.app.ui.theme.ReiTheme
 import com.rei.app.ui.theme.ThemeViewModel
 import com.rei.app.util.DeepLinkHandler
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    @Inject lateinit var themeViewModel: ThemeViewModel
+    private val themeViewModel: ThemeViewModel by viewModels()
 
     // Deep link destination to navigate to after compose setup
     private var pendingDeepLinkId by mutableStateOf<Int?>(null)
