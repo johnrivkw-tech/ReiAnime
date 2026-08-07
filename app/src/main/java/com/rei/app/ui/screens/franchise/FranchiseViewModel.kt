@@ -70,7 +70,7 @@ class FranchiseViewModel @Inject constructor(
             if (nodes.isEmpty()) {
                 try {
                     var detail: Anime? = null
-                    repo.getAnimeDetail(animeId).collect { result -> detail = result.first; throw kotlinx.coroutines.CancellationException() }
+                    repo.getAnimeDetail(animeId).collect { result -> detail = result; throw kotlinx.coroutines.CancellationException() }
                     detail?.recommendations?.forEach { rec ->
                         nodes.add(FranchiseNode(
                             id = rec.id,
