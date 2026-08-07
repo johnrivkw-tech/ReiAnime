@@ -5,17 +5,25 @@ import androidx.datastore.preferences.core.*
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import javax.inject.Singleton
 
-@HiltViewModel
-class ThemeViewModel @Inject constructor(private val store: ReiDataStore) : ViewModel() {
+// Holds the actual theme/config state + persistence. This is a plain singleton
+// (NOT a ViewModel) so it can safely be injected into other classes, including
+// other ViewModels — Hilt prohibits injecting one @HiltViewModel into another.
+@Singleton
+class ThemeRepository @Inject constructor(private val store: ReiDataStore) {
+    private val repoScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
     private val _state = MutableStateFlow(ThemeState())
     val themeState: StateFlow<ThemeState> = _state.asStateFlow()
 
     init {
-        viewModelScope.launch {
+        repoScope.launch {
             store.prefs.collect { p ->
                 val config = ReiConfig(
                     themeMode = ThemeMode.entries.getOrElse(p[K.THEME] ?: 0) { ThemeMode.SYSTEM },
@@ -124,7 +132,7 @@ class ThemeViewModel @Inject constructor(private val store: ReiDataStore) : View
         }
     }
 
-    fun update(transform: (ReiConfig) -> ReiConfig) = viewModelScope.launch {
+    fun update(transform: (ReiConfig) -> ReiConfig) = repoScope.launch {
         val c = transform(_state.value.config)
         // Persist all fields
         store.putInt(K.THEME, c.themeMode.ordinal); store.putInt(K.ACCENT, c.accentColor.ordinal)
@@ -218,6 +226,14 @@ class ThemeViewModel @Inject constructor(private val store: ReiDataStore) : View
         val SWIPE_SENS = intPreferencesKey("ss4"); val CACHE_MB = intPreferencesKey("cm2"); val WEBSOCKET = booleanPreferencesKey("ws")
         val NOTIFY_AIRING = booleanPreferencesKey("na"); val NOTIFY_FOLLOWS = booleanPreferencesKey("nf2"); val NOTIFY_ANNOUNCE = booleanPreferencesKey("nna")
     }
+}
+
+// Thin ViewModel wrapper around ThemeRepository for use directly from Activities/Composables
+// via the standard Android ViewModel APIs (e.g. `by viewModels()`).
+@HiltViewModel
+class ThemeViewModel @Inject constructor(private val repo: ThemeRepository) : ViewModel() {
+    val themeState: StateFlow<ThemeState> = repo.themeState
+    fun update(transform: (ReiConfig) -> ReiConfig) = repo.update(transform)
 }
 
 class ReiDataStore @Inject constructor(private val ds: DataStore<Preferences>) {
