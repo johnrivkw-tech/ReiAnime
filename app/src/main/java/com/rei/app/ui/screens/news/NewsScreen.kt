@@ -35,8 +35,12 @@ fun NewsScreen(onAnimeClick: (Int) -> Unit, vm: NewsViewModel = hiltViewModel())
 
     Scaffold(topBar = {
         TopAppBar(
-            title = { Text("Anime Pulse", fontWeight = FontWeight.Bold) },
-            subtitle = { Text("Trending & Top Scored", style = MaterialTheme.typography.labelSmall) },
+            title = {
+                Column {
+                    Text("Anime Pulse", fontWeight = FontWeight.Bold)
+                    Text("Trending & Top Scored", style = MaterialTheme.typography.labelSmall)
+                }
+            },
             actions = {
                 if (isLoading) CircularProgressIndicator(modifier = Modifier.size(20.dp).padding(end = 12.dp), strokeWidth = 2.dp, color = MaterialTheme.colorScheme.primary)
                 else IconButton({ vm.refresh() }) { Icon(Icons.Filled.Refresh, "Refresh") }
