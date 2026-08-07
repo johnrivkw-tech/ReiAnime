@@ -27,7 +27,7 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 var user: User? = null
-                repo.getViewer().collect { result -> user = result.first; throw kotlinx.coroutines.CancellationException() }
+                repo.getViewer().collect { result -> user = result; throw kotlinx.coroutines.CancellationException() }
                 _state.value = ProfileState.Success(user)
             } catch (_: Exception) {
                 _state.value = ProfileState.Success(null)
